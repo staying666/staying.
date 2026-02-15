@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just / Staying PFP Vault</title>
+<style>
+    /* Fundal și fade */
+    body {
+        margin: 0;
+        padding: 0;
+        background: black;
+        overflow: hidden;
+        font-family: 'Arial', sans-serif;
+        color: white;
+    }
+
+    /* Sparkle */
+    .sparkle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+        0% { opacity: 0.1; transform: scale(0.5);}
+        50% { opacity: 1; transform: scale(1.5);}
+        100% { opacity: 0.1; transform: scale(1);}
+    }
+
+    /* Titlu neon */
+    h1 {
+        text-align: center;
+        font-size: 3em;
+        color: #fff;
+        text-shadow:
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 40px #0ff,
+            0 0 80px #0ff;
+        margin-top: 50px;
+    }
+
+    /* Buton Create Vault */
+    #createVaultBtn {
+        display: block;
+        margin: 50px auto;
+        padding: 15px 30px;
+        background: black;
+        color: white;
+        border: 2px solid white;
+        border-radius: 15px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #createVaultBtn:hover {
+        background: white;
+        color: black;
+    }
+
+    /* Vault container */
+    #vault {
+        display: none;
+        margin: 20px auto;
+        width: 400px;
+        min-height: 300px;
+        border: 2px solid white;
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+    }
+
+    #vault button {
+        margin: 10px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: 2px solid white;
+        background: black;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #vault button:hover {
+        background: white;
+        color: black;
+    }
+
+    /* Small "Made by" box */
+    #madeBy {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        border: 2px solid white;
+        border-radius: 10px;
+        padding: 5px 10px;
+        font-size: 0.9em;
+    }
+
+    /* Uploaded images container */
+    #vaultImages img {
+        max-width: 100%;
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
+</style>
+</head>
+<body>
+
+<h1>Just / Staying PFP Vault</h1>
+<button id="createVaultBtn">Create Vault</button>
+
+<div id="vault">
+    <div id="vaultImages"></div>
+    <button id="uploadBtn">Upload Photo</button>
+    <button id="viewBtn">View Vault</button>
+</div>
+
+<div id="madeBy">Made by Resky and 6hunnabby</div>
+
+<script>
+    // Sparkles generate
+    for(let i=0;i<100;i++){
+        let sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.top = Math.random()*100+'%';
+        sparkle.style.left = Math.random()*100+'%';
+        sparkle.style.width = sparkle.style.height = Math.random()*3+1+'px';
+        document.body.appendChild(sparkle);
+    }
+
+    // Vault logic
+    const createBtn = document.getElementById('createVaultBtn');
+    const vault = document.getElementById('vault');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const viewBtn = document.getElementById('viewBtn');
+    const vaultImages = document.getElementById('vaultImages');
+
+    createBtn.addEventListener('click', ()=>{
+        vault.style.display = 'block';
+        createBtn.style.display = 'none';
+    });
+
+    // Upload photo
+    uploadBtn.addEventListener('click', ()=>{
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = e => {
+            let file = e.target.files[0];
+            if(file){
+                let reader = new FileReader();
+                reader.onload = function(ev){
+                    let img = document.createElement('img');
+                    img.src = ev.target.result;
+                    vaultImages.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        input.click();
+    });
+
+    // View vault (simply scrolls to images)
+    viewBtn.addEventListener('click', ()=>{
+        vaultImages.scrollIntoView({behavior:'smooth'});
+    });
+
+</script>
+
+</body>
+</html>
