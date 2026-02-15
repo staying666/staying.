@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Just / Staying PFP Vault</title>
 <style>
-    /* Fundal și fade */
     body {
         margin: 0;
         padding: 0;
@@ -15,7 +14,6 @@
         color: white;
     }
 
-    /* Sparkle */
     .sparkle {
         position: absolute;
         width: 2px;
@@ -32,7 +30,6 @@
         100% { opacity: 0.1; transform: scale(1);}
     }
 
-    /* Titlu neon */
     h1 {
         text-align: center;
         font-size: 3em;
@@ -46,7 +43,6 @@
         margin-top: 50px;
     }
 
-    /* Buton Create Vault */
     #createVaultBtn {
         display: block;
         margin: 50px auto;
@@ -65,7 +61,6 @@
         color: black;
     }
 
-    /* Vault container */
     #vault {
         display: none;
         margin: 20px auto;
@@ -94,7 +89,6 @@
         color: black;
     }
 
-    /* Small "Made by" box */
     #madeBy {
         position: absolute;
         top: 10px;
@@ -105,13 +99,22 @@
         font-size: 0.9em;
     }
 
-    /* Uploaded images container */
     #vaultImages img {
         max-width: 100%;
         margin-top: 10px;
         border-radius: 10px;
     }
 
+    #vaultName {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        text-shadow:
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 40px #0ff,
+            0 0 80px #0ff;
+    }
 </style>
 </head>
 <body>
@@ -120,9 +123,11 @@
 <button id="createVaultBtn">Create Vault</button>
 
 <div id="vault">
+    <div id="vaultName"></div>
     <div id="vaultImages"></div>
     <button id="uploadBtn">Upload Photo</button>
     <button id="viewBtn">View Vault</button>
+    <button id="hideBtn" style="display:none;">Hide Vault</button>
 </div>
 
 <div id="madeBy">Made by Resky and 6hunnabby</div>
@@ -138,14 +143,19 @@
         document.body.appendChild(sparkle);
     }
 
-    // Vault logic
     const createBtn = document.getElementById('createVaultBtn');
     const vault = document.getElementById('vault');
     const uploadBtn = document.getElementById('uploadBtn');
     const viewBtn = document.getElementById('viewBtn');
+    const hideBtn = document.getElementById('hideBtn');
     const vaultImages = document.getElementById('vaultImages');
+    const vaultNameDiv = document.getElementById('vaultName');
 
+    // Create Vault with name
     createBtn.addEventListener('click', ()=>{
+        let name = prompt("Enter your vault name:");
+        if(!name) name = "My Vault";
+        vaultNameDiv.textContent = name;
         vault.style.display = 'block';
         createBtn.style.display = 'none';
     });
@@ -170,11 +180,17 @@
         input.click();
     });
 
-    // View vault (simply scrolls to images)
+    // View vault
     viewBtn.addEventListener('click', ()=>{
         vaultImages.scrollIntoView({behavior:'smooth'});
+        hideBtn.style.display = 'inline-block';
     });
 
+    // Hide vault
+    hideBtn.addEventListener('click', ()=>{
+        vaultImages.scrollIntoView({behavior:'smooth'});
+        hideBtn.style.display = 'none';
+    });
 </script>
 
 </body>
